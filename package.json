@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17",
+    "react-scripts": "^2.1.0",
     "redux": "^3.7.2"
   },
   "scripts": {
@@ -16,5 +16,11 @@
   },
   "devDependencies": {
     "eslint-plugin-jest": "^21.26.2"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
