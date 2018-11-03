@@ -2,17 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { creation } from '../reducers/anecdoteReducer'
 import { notifyCreated, removeNotification } from '../reducers/notificationReducer'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
-    this.props.creation(content)
+    const newAnecdote = await anecdoteService.createNew(content)
+
+    this.props.creation(newAnecdote)
     this.props.notifyCreated()
     setTimeout(() => {
       this.props.removeNotification()
     }, 5000)
-    e.target.anecdote.value = ''
   }
   render() {
     return (
