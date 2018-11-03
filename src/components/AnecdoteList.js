@@ -4,11 +4,15 @@ import { voting } from '../reducers/anecdoteReducer'
 
 class AnecdoteList extends React.Component {
   render() {
-    const anecdotes = this.props.store.getState().anecdotes
+    const { anecdotes, filter } = this.props.store.getState()
+    const anecdotesToShow = () => {
+      return anecdotes.filter(a => a.content.includes(filter)).sort((a, b) => b.votes - a.votes)
+    }
+
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+        {anecdotesToShow().map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}
