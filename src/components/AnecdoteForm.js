@@ -10,7 +10,7 @@ class AnecdoteForm extends React.Component {
     this.props.creation(content)
     this.props.notifyCreated()
     setTimeout(() => {
-      this.props.store.dispatch(removeNotification())
+      this.props.removeNotification()
     }, 5000)
     e.target.anecdote.value = ''
   }
@@ -27,13 +27,12 @@ class AnecdoteForm extends React.Component {
   }
 }
 
-const mapStateToProps = () => { return {} }
-
 const mapDispatchToProps = {
   creation,
-  notifyCreated
+  notifyCreated,
+  removeNotification
 }
 
-const ConnectedAnecdoteForm = connect(mapStateToProps, mapDispatchToProps)(AnecdoteForm)
+const ConnectedAnecdoteForm = connect(null, mapDispatchToProps)(AnecdoteForm)
 
 export default ConnectedAnecdoteForm

@@ -19,12 +19,10 @@ class Filter extends React.Component {
   }
 }
 
-const mapStateToProps = () => {return {}}
-
 const mapDispatchToProps = {
   filter
 }
 
-const ConnectedFilter = connect(mapStateToProps, mapDispatchToProps)(Filter)
+const ConnectedFilter = connect(null, mapDispatchToProps)(Filter)
 
 export default ConnectedFilter
