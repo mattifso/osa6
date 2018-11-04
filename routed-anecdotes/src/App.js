@@ -1,18 +1,16 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 
-const Menu = ({ anecdotes, addNew, anecdoteById }) => (
-  <Router>
-    <div>
-      <Link to="/">anecdotes</Link>&nbsp;
+const Menu = ({ anecdotes, addNew, anecdoteById, notify }) => (
+  <div>
+    <Link to="/">anecdotes</Link>&nbsp;
       <Link to="/create">create new</Link>&nbsp;
       <Link to="/about">about</Link>&nbsp;
       <Route exact path="/" render={() => <div><AnecdoteList anecdotes={anecdotes} /> </div>} />
-      <Route path="/about" render={() => <div><About /> </div>} />
-      <Route path="/create" render={() => <div><CreateNew addNew={addNew} /> </div>} />
-      <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={anecdoteById(match.params.id)} />} />
-    </div>
-  </Router>
+    <Route path="/about" render={() => <div><About /> </div>} />
+    <Route path="/create" render={() => <div><CreateNew addNew={addNew} notify={notify} /> </div>} />
+    <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={anecdoteById(match.params.id)} />} />
+  </div>
 )
 
 const Anecdote = ({ anecdote }) => {
@@ -78,8 +76,9 @@ class CreateNew extends React.Component {
       content: this.state.content,
       author: this.state.author,
       info: this.state.info,
-      votes: 0
+      votes: 0,
     })
+    this.props.notify(`a new notification ${this.state.content} created`)
   }
 
   render() {
@@ -152,13 +151,26 @@ class App extends React.Component {
 
     this.setState({ anecdotes })
   }
+  notify = (notification) => {
+    this.setState({ notification })
+    setTimeout(() => {
+      this.setState({ notification: '', redirect: '/' })
+    }, 10000)
+
+  }
 
   render() {
     return (
       <div>
-        <h1>Software anecdotes</h1>
-        <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} anecdoteById={this.anecdoteById}/>
-        <Footer />
+        <Router>
+          <div>
+            <h1>Software anecdotes</h1>
+            {this.state.notification ? <em>{this.state.notification}</em> : ''}
+            {this.state.redirect ? <Redirect to={this.state.redirect} /> : ''}
+            <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} anecdoteById={this.anecdoteById} notify={this.notify} />
+            <Footer />
+          </div>
+        </Router>
       </div>
     )
   }
