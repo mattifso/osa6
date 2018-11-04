@@ -1,12 +1,11 @@
 const reducer = (store = [], action) => {
   if (action.type === 'VOTE') {
-    const old = store.filter(a => a.id !== action.id)
-    const voted = store.find(a => a.id === action.id)
-
-    return [...old, { ...voted, votes: voted.votes + 1 }]
+    const updatedAnecdote = action.updatedAnecdote
+    const old = store.filter(a => a.id !== updatedAnecdote.id)
+    return [...old, updatedAnecdote]
   }
   if (action.type === 'CREATE') {
-    return [...store, { content: action.newEntry.content, id: action.newEntry.id, votes: 0 }]
+    return [...store, { content: action.newEntry.content, id: action.newEntry.id, votes: action.newEntry.votes }]
   }
   if (action.type === 'INIT_ANECDOTES') {
     return action.data
@@ -15,8 +14,8 @@ const reducer = (store = [], action) => {
   return store
 }
 
-export const voting = (id) => {
-  return { type: 'VOTE', id: id }
+export const voting = (updatedAnecdote) => {
+  return { type: 'VOTE', updatedAnecdote: updatedAnecdote }
 }
 
 export const creation = (newEntry) => {
