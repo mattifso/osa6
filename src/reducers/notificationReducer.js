@@ -1,6 +1,6 @@
 const reducer = (store = '', action) => {
   if (action.type === 'NOTIFY_CREATED') {
-    return 'Created a a new anecdote'
+    return `you created '${action.content}'`
   }
 
   if (action.type === 'REMOVE_NOTIFICATION') {
@@ -9,12 +9,12 @@ const reducer = (store = '', action) => {
 
   return store
 }
-export const notifyCreated = () => {
-  return { type: 'NOTIFY_CREATED' }
+export const notifyCreated = (content) => {
+  return (dispatch) => {
+    dispatch({ type: 'NOTIFY_CREATED', content })
+    setTimeout(() => {
+      dispatch({ type: 'REMOVE_NOTIFICATION' })
+    }, 5000)
+  }
 }
-
-export const removeNotification = () => {
-  return { type: 'REMOVE_NOTIFICATION' }
-}
-
 export default reducer
