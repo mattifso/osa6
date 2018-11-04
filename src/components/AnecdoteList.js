@@ -1,14 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { voting } from '../reducers/anecdoteReducer'
-import anecdoteService from '../services/anecdotes'
-
+import { vote } from '../reducers/anecdoteReducer'
 
 class AnecdoteList extends React.Component {
   handleVote = async (anecdote) => {
-    anecdote.votes++
-    const newAnecdote = await anecdoteService.update(anecdote)
-    this.props.voting(newAnecdote)
+    this.props.vote(anecdote)
   }
 
   render() {
@@ -45,7 +41,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  voting
+  vote
 }
 
 const ConnectedAnecdoteList = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)

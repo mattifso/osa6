@@ -1,16 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { creation } from '../reducers/anecdoteReducer'
 import { notifyCreated, removeNotification } from '../reducers/notificationReducer'
-import anecdoteService from '../services/anecdotes'
+import { createNew } from '../reducers/anecdoteReducer'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
-    const newAnecdote = await anecdoteService.createNew(content)
-
-    this.props.creation(newAnecdote)
+    this.props.createNew(content)
     this.props.notifyCreated()
     setTimeout(() => {
       this.props.removeNotification()
@@ -30,7 +27,7 @@ class AnecdoteForm extends React.Component {
 }
 
 const mapDispatchToProps = {
-  creation,
+  createNew,
   notifyCreated,
   removeNotification
 }
