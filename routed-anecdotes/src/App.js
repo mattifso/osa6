@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, NavLink } from 'react-router-dom'
-import { ListGroup, ListGroupItem, Grid, Col, Image } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Grid, Col, Image, ControlLabel, FormControl, FormGroup, Button } from 'react-bootstrap'
 
 const Menu = ({ anecdotes, addNew, anecdoteById, notify }) => {
   const menuStyle = {
@@ -104,27 +104,30 @@ class CreateNew extends React.Component {
       info: this.state.info,
       votes: 0,
     })
-    this.props.notify(`a new notification ${this.state.content} created`)
+    this.props.notify(`a new anecdote ${this.state.content} created`)
   }
 
   render() {
     return (
       <div>
         <h2>create a new anecdote</h2>
+
         <form onSubmit={this.handleSubmit}>
-          <div>
-            content
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
+          <FormGroup>
+            <div>
+              <ControlLabel>content</ControlLabel>
+              <FormControl type='text' name='content' value={this.state.content} onChange={this.handleChange} />
+            </div>
+            <div>
+              <ControlLabel>author</ControlLabel>
+              <FormControl type='text' name='author' value={this.state.author} onChange={this.handleChange} />
+            </div>
+            <div>
+              <ControlLabel>url for more info</ControlLabel>
+              <FormControl type='text' name='info' value={this.state.info} onChange={this.handleChange} />
+            </div>
+            <Button bsStyle="success" type="submit">create</Button>
+          </FormGroup>
         </form>
       </div>
     )
