@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom
 const Menu = ({ anecdotes, addNew, anecdoteById, notify }) => (
   <div>
     <Link to="/">anecdotes</Link>&nbsp;
-      <Link to="/create">create new</Link>&nbsp;
-      <Link to="/about">about</Link>&nbsp;
-      <Route exact path="/" render={() => <div><AnecdoteList anecdotes={anecdotes} /> </div>} />
+    <Link to="/create">create new</Link>&nbsp;
+    <Link to="/about">about</Link>&nbsp;
+    <Route exact path="/" render={() => <div><AnecdoteList anecdotes={anecdotes} /> </div>} />
     <Route path="/about" render={() => <div><About /> </div>} />
     <Route path="/create" render={() => <div><CreateNew addNew={addNew} notify={notify} /> </div>} />
     <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={anecdoteById(match.params.id)} />} />
@@ -160,12 +160,24 @@ class App extends React.Component {
   }
 
   render() {
+    const style = {
+      border: 'solid',
+      padding: 50,
+      borderWidth: 5,
+      borderRadius: 50,
+      margin: 50,
+      background: 'linear-gradient(red, yellow)',
+      textAlign: 'center',
+      color: 'purple',
+      wordSpacing: 5
+    }
+
     return (
       <div>
         <Router>
           <div>
             <h1>Software anecdotes</h1>
-            {this.state.notification ? <em>{this.state.notification}</em> : ''}
+            {this.state.notification ? <div style={style}> {this.state.notification} </div> : ''}
             {this.state.redirect ? <Redirect to={this.state.redirect} /> : ''}
             <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} anecdoteById={this.anecdoteById} notify={this.notify} />
             <Footer />
