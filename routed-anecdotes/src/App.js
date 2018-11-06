@@ -1,17 +1,36 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect, NavLink } from 'react-router-dom'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
-const Menu = ({ anecdotes, addNew, anecdoteById, notify }) => (
-  <div>
-    <Link to="/">anecdotes</Link>&nbsp;
-    <Link to="/create">create new</Link>&nbsp;
-    <Link to="/about">about</Link>&nbsp;
-    <Route exact path="/" render={() => <div><AnecdoteList anecdotes={anecdotes} /> </div>} />
-    <Route path="/about" render={() => <div><About /> </div>} />
-    <Route path="/create" render={() => <div><CreateNew addNew={addNew} notify={notify} /> </div>} />
-    <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={anecdoteById(match.params.id)} />} />
-  </div>
-)
+const Menu = ({ anecdotes, addNew, anecdoteById, notify }) => {
+  const menuStyle = {
+    border: 'solid',
+    padding: 10,
+    borderWidth: 5,
+    borderRadius: 10,
+    margin: 10,
+    background: 'linear-gradient(green, purple)',
+  }
+  const activeStyle = {
+    color: 'red',
+    fontWeight: 'bold'
+  }
+  const passiveStyle = {
+    color: 'lightBlue',
+  }
+  return (
+    <div>
+      <div style={menuStyle}>
+        <NavLink style={passiveStyle} activeStyle={activeStyle} exact to="/">anecdotes</NavLink>&nbsp;
+        <NavLink style={passiveStyle} activeStyle={activeStyle} exact to="/create">create new</NavLink>&nbsp;
+        <NavLink style={passiveStyle} activeStyle={activeStyle} exact to="/about">about</NavLink>&nbsp;
+      </div>
+      <Route exact path="/" render={() => <div><AnecdoteList anecdotes={anecdotes} /> </div>} />
+      <Route path="/about" render={() => <div><About /> </div>} />
+      <Route path="/create" render={() => <div><CreateNew addNew={addNew} notify={notify} /> </div>} />
+      <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={anecdoteById(match.params.id)} />} />
+    </div>)
+}
 
 const Anecdote = ({ anecdote }) => {
   return (
@@ -27,9 +46,9 @@ const Anecdote = ({ anecdote }) => {
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
-    </ul>
+    <ListGroup>
+      {anecdotes.map(anecdote => <ListGroupItem key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></ListGroupItem>)}
+    </ListGroup>
   </div>
 )
 
@@ -160,7 +179,7 @@ class App extends React.Component {
   }
 
   render() {
-    const style = {
+    const notificationStyle = {
       border: 'solid',
       padding: 50,
       borderWidth: 5,
@@ -177,7 +196,7 @@ class App extends React.Component {
         <Router>
           <div>
             <h1>Software anecdotes</h1>
-            {this.state.notification ? <div style={style}> {this.state.notification} </div> : ''}
+            {this.state.notification ? <div style={notificationStyle}> {this.state.notification} </div> : ''}
             {this.state.redirect ? <Redirect to={this.state.redirect} /> : ''}
             <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} anecdoteById={this.anecdoteById} notify={this.notify} />
             <Footer />
