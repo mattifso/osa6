@@ -15,9 +15,11 @@ class Notification extends React.Component {
       wordSpacing: 5
     }
     return (
-      <div style={style}>
-        {this.props.notification}
-      </div>
+      this.props.notification ?
+        <div style={style}>
+          {this.props.notification}
+        </div>
+        : ''
     )
   }
 }
