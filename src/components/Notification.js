@@ -5,8 +5,14 @@ class Notification extends React.Component {
   render() {
     const style = {
       border: 'solid',
-      padding: 10,
-      borderWidth: 1
+      padding: 50,
+      borderWidth: 5,
+      borderRadius: 50,
+      margin: 50,
+      background: 'linear-gradient(red, yellow)',
+      textAlign: 'center',
+      color: 'purple',
+      wordSpacing: 5
     }
     return (
       <div style={style}>
